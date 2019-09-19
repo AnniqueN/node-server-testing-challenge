@@ -1,7 +1,7 @@
 const request = require('supertest'); // calling it "request" is a common practice
 // const request = supertest(server)
 const server = require('../api/server.js') // Link to your server file
-
+const studentmodel = require('../students/student-model')
 const knex = require('knex');
 const knexConfig = require('../knexfile.js');
 const db = knex(knexConfig.development)
@@ -19,7 +19,7 @@ describe('server.js', () => {
   describe('index route', () => {
     it('should return a a 404 for restricted route (page not found)', async () => {
       // do a get request to our api (server.js) and inspect the response
-      const response = await request(server).get('/students');
+      const response = await request(server).get('/users');
       expect(response.status).toBe(404);
 
       // same test using promise .then() instead of async/await
@@ -30,21 +30,19 @@ describe('server.js', () => {
       // })
     });
 
-    it('Adding user to database', async () => {
-      
+    // describe('endpoints', () => {
+    //   describe('GET /', () => {
 
-      await request(server).post('/reg')
-      .send({username: 'Kitty', password: 'Kittens' })
-      const user = db('auth')
-      // const {users} = req.body
-      expect(user).toBe(5);
-    });
+    //     //test for res.status
+    //     it('should retun 200 ok ', async() => {
+    //       const res = await request(server).get('/')
+    //       expect(res.status).toBe(200)
+    //     })
 
-    // it('should return a JSON object fron the index route', async () => {
-    //   const response = await request(server).get('/');
 
-    //   expect(response.type).toEqual('application/json');
-    // });
+    //   }) 
+    // })
+    
     // This test fails because 1 !== 2
     it('Testing to see if Jest works', () => {
       expect(1).toBe(1)
